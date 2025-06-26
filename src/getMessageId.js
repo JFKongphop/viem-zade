@@ -1,10 +1,6 @@
 const { parseAbiItem } = require('viem');
 const { 
-  walletClient,
-  NFT_ADDRESS,
-  OWNER_ADDRESS,
   DEPOSITOR_ADDRESS,
-  WITHDRAWER_ADDRESS,
   SEPOLIA
 } = require('./data');
 const { defineChain, createPublicClient, http } = require('viem');
@@ -53,7 +49,7 @@ const execution = async () => {
   })
   
   const filter = await publicClient.createEventFilter({
-    address: '0x7B21582f11527001CEAD47826c24F0bB997edC76',
+    address: DEPOSITOR_ADDRESS,
     event: eventNFTDeposit,
     fromBlock: 8613223n,
     // args: {
