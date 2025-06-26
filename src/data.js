@@ -16,6 +16,7 @@ const NFT_ADDRESS = process.env.NFT;
 const USDC_ADDRESS = process.env.USDC_SEPOLIA;
 const DEPOSITOR_ADDRESS = process.env.NFT_DEPOSITOR;
 const WITHDRAWER_ADDRESS = process.env.LOAN_WITHDRAW;
+const SEPOLIA = process.env.SEPOLIA;
 
 const account = privateKeyToAccount(PRIVATE_KEY);
 
@@ -42,5 +43,6 @@ module.exports = {
   DEPOSITOR_ABI,
   WITHDRAWER_ABI,
   DEPOSITOR_ADDRESS,
-  WITHDRAWER_ADDRESS
+  WITHDRAWER_ADDRESS,
+  SEPOLIA
 }
