@@ -1,5 +1,7 @@
 const { parseAbiItem } = require('viem');
 const { 
+  NFT_ADDRESS,
+  OWNER_ADDRESS,
   DEPOSITOR_ADDRESS,
   SEPOLIA
 } = require('./data');
@@ -36,32 +38,32 @@ const sepolia = defineChain({
 })
 
 const execution = async () => {  
+  const eventNFTDeposit = parseAbiItem('event NFTDeposit(address indexed nftAddress, address indexed owner, uint256 indexed tokenId, bytes32 messageId, uint256 startedTime, uint256 expiredTime)');
   
-
-  // new const eventNFTDeposit = parseAbiItem('event NFTDeposit(address indexed nftAddress, address indexed owner, uint256 indexed tokenId, bytes32 messageId, uint256 startedTime, uint256 expiredTime)');
-  
-  const eventNFTDeposit = parseAbiItem(
-    'event NFTDeposit(address indexed nftAddress, address indexed owner, uint256 tokenId, uint256 startedTime, uint256 expiredTime)'
-  )
   const publicClient = createPublicClient({
     chain: sepolia,
     transport: http(),
-  })
+  });
+
+  const tokenId = 2;
   
   const filter = await publicClient.createEventFilter({
     address: DEPOSITOR_ADDRESS,
     event: eventNFTDeposit,
-    fromBlock: 8613223n,
-    // args: {
-    //   nftAddress,
-    //   owner,
-    //   tokenId
-    // }
+    fromBlock: 8638138n,
+    args: {
+      // nftAddress: NFT_ADDRESS,
+      owner: OWNER_ADDRESS,
+      // tokenId
+    }
   })
 
   const logs = await publicClient.getFilterLogs({ filter })
 
-  console.log(logs)
+  // console.log(logs)
+
+  const messageIds = logs.map((x) => x.args.messageId);
+  console.log(messageIds);
 };
 
 execution().catch((error) => {
